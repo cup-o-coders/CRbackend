@@ -10,6 +10,7 @@ RSpec.describe UsersController, type: :controller do
             expect(json.length).to eq 1
         end
 
+        # TODO gets the tests to work.
         it "creates a new cat" do
             user_params = {
                 user: {
