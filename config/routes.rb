@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  resources :favorites
-  resources :users
+  resources :users do
+      resources :favorites
+  end
 end
