@@ -11,7 +11,7 @@ RSpec.describe UsersController, type: :controller do
         end
 
         # TODO gets the tests to work.
-        it "creates a new cat" do
+        it "creates a new user" do
             user_params = {
                 user: {
                     name: "Hunter",
@@ -23,7 +23,9 @@ RSpec.describe UsersController, type: :controller do
             expect(response).to have_http_status(200)
             new_user = User.first
             expect(new_user.name).to eq("Hunter")
-            # expect(new_user.email).to eq("hunterstokes@me.com")
+            expect(new_user.email).to eq("hunterstokes@me.com")
         end
+        
+
     end
 end
