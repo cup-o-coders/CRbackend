@@ -8,7 +8,7 @@ class YelpController < ApplicationController
    API_HOST = "https://api.yelp.com"
    SEARCH_PATH = "/v3/businesses/search"
 
-   def search()
+   def search
      url = "#{API_HOST}#{SEARCH_PATH}"
      yelpParams = {
        term: "coffee",
