@@ -5,12 +5,16 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.create
-        render json: @user
+        user = User.create(user_params)
+        if user.valid?
+            render json: user
+        else
+            render json: user.errors, status: :unprocessable_entity
+        end
     end
 
     def user_params
-        params.require(:name).permit(:name, :email, :password)
+        params.require(:user).permit(:name, :email, :password)
     end
 
     def edit

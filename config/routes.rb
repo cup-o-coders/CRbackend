@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'yelp/search'
-  resources :favorites
-  resources :users
+  resources :users do
+    resources :favorites
+  end
 end
