@@ -1,13 +1,3 @@
-# class QueriesController < ApplicationController
-#   def request
-#     newCall = Yelp.new("san-diego")
-#     render json: newCall.businesses
-    
-#   end
-  
-# end
-
-
 require "http";
 
 class YelpController < ApplicationController
@@ -17,10 +7,8 @@ class YelpController < ApplicationController
    # Constants, do not change these
    API_HOST = "https://api.yelp.com"
    SEARCH_PATH = "/v3/businesses/search"
-   BUSINESS_PATH = "/v3/businesses/"
-  #  SEARCH_LIMIT = 10
 
-   def search
+   def search()
      url = "#{API_HOST}#{SEARCH_PATH}"
      yelpParams = {
        term: "coffee",
@@ -31,8 +19,9 @@ class YelpController < ApplicationController
 
      response = HTTP.auth("Bearer #{API_KEY}").get(url, params: yelpParams)
 
-     puts response
+    #  puts response
+    #  response.parse
+     render json: response
 
-     response.parse
    end
 end
