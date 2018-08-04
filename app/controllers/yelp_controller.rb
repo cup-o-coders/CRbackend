@@ -7,12 +7,12 @@ class YelpController < ApplicationController
    # Constants, do not change these
    API_HOST = "https://api.yelp.com"
    SEARCH_PATH = "/v3/businesses/search"
-
+# form will post to yelp/search endpoint. input name = location. form action is search.
    def search
      url = "#{API_HOST}#{SEARCH_PATH}"
      yelpParams = {
        term: "coffee",
-       location: "san-diego",
+       location: params[:location],
        open_now: true,
        limit: 10
      }
