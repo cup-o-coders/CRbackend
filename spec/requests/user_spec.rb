@@ -1,42 +1,48 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :request do
-    it "doesn't create a user without a name" do
-        user_params = {
-            user: {
-                email: 'hunterstokes@me.com',
-                password: 'thispass123'
-            }
-        }
-        post '/users', params: user_params
-        expect(response.status).to eq 422
-        json = JSON.parse(response.body)
-        expect(json['name']).to include "can't be blank"
+RSpec.describe "Users", type: :request do
+  describe "GET /users/:id" do
+    let(:user){ User.create name: 'Bob', email: 'bob@bobber.com', password: 'secret'}
+    let(:auth_header) do
+      token = Knock::AuthToken.new(payload: {sub: user.id}).token
+      {
+        'Authorization': "Bearer #{token}"
+      }
     end
 
-    it "doesn't create a user without an email" do
-        user_params = {
-            user: {
-                name: 'Hunter',
-                password: 'thispass123'
-            }
+    #.... other user tests
+
+    it "creates a user" do
+      payload = {
+        user: {
+          name: 'Jill',
+          email: 'jill@jiller.com',
+          password: 'secret',
+          password_confirmation: 'secret'
         }
-        post '/users', params: user_params
-        expect(response.status).to eq 422
-        json = JSON.parse(response.body)
-        expect(json['email']).to include "can't be blank"
+      }
+
+      post users_path, params: payload
+      expect(response).to have_http_status(201)
+      json = JSON.parse(response.body)
+      expect(json["user"]["name"]).to eq "Jill"
+      expect(json["jwt"]).to_not be_blank
     end
 
-    it "doesn't create a user without a password" do
-        user_params = {
-            user: {
-                name: 'Hunter',
-                email: 'hunterstokes@me.com'
-            }
+    it "should return errors when fails to create" do
+      payload = {
+        user: {
+          name: 'Jill',
+          email: 'jill@jiller.com',
+          password: 'secret',
+          password_confirmation: 'wrong password'
         }
-        post '/users', params: user_params
-        expect(response.status).to eq 422
-        json = JSON.parse(response.body)
-        expect(json['password']).to include "can't be blank"
+      }
+
+      post users_path, params: payload
+      expect(response).to have_http_status(422)
+      json = JSON.parse(response.body)
+      expect(json["errors"]["password_confirmation"]).to_not be_blank
     end
+  end
 end
