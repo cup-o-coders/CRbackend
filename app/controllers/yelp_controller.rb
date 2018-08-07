@@ -17,11 +17,9 @@ class YelpController < ApplicationController
        limit: 10
      }
 
-     response = HTTP.auth("Bearer #{API_KEY}").get(url, params: yelpParams)
+    response = HTTP.auth("Bearer #{API_KEY}").get(url, params: yelpParams)
 
-    #  puts response
-    #  response.parse
-     render json: response
+    render json: response.parse
 
    end
 end
