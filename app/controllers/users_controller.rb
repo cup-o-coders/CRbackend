@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
     before_action :authenticate_user, only: :show
 
+    def index
+        user = User.all
+        render json: user
+    end
+
     def show
         user = User.find params[:id]
         render json: user
@@ -22,6 +27,6 @@ class UsersController < ApplicationController
 
     private
     def user_params
-        params.require(:user).permit(:email, :name, :password, :password_confirmation)
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
 end
