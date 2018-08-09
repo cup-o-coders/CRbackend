@@ -13,6 +13,10 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore editor configurations
+.idea
+.vscode
+
 # Ignore uploaded files in development
 /storage/*
 *.rbc
