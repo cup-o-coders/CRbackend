@@ -1,6 +1,7 @@
 class FavoritesController < ApplicationController
   before_action :authenticate_user
 
+
     def index
       # TODO Check that this validates against correct signed in user
       # Pass current user from Authentication
@@ -28,9 +29,7 @@ class FavoritesController < ApplicationController
 
     private
     # Use callbacks to share common setup or constraints between actions.
-    def set_favorite
-      @favorite = Favorite.find(params[:id])
-    end
+
 
     def favorite_params
       params.require(:favorite).permit(:image_url, :name, :display_address, :display_phone, :rating)
