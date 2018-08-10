@@ -14,7 +14,7 @@ class YelpController < ApplicationController
        term: "coffee",
        location: params[:location],
        open_now: true,
-       limit: 10
+       limit: 5
      }
 
     response = HTTP.auth("Bearer #{API_KEY}").get(url, params: yelpParams)
