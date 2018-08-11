@@ -2,12 +2,20 @@ class FavoritesController < ApplicationController
   before_action :authenticate_user
 
 
-    def index
-      # TODO Check that this validates against correct signed in user
-      # Pass current user from Authentication
-      @favorites = Favorite.where(["user_id = :u", { u: current_user.id }])
+    # def index
+    #   # TODO Check that this validates against correct signed in user
+    #   # Pass current user from Authentication
+    #   @favorites= User.find(params[:id]).favorite
+    #   # @favorites = Favorite.where(["user_id = :u", { u: current_user.id }])
+    #   render json: @favorites
+    # end
+
+    def findbyuser
+      @favorites= Favorite.where("user_id=?", params[:id])
+      # @favorites = Favorite.where(["user_id = :u", { u: current_user.id }])
       render json: @favorites
     end
+
 
     def create
 
@@ -32,6 +40,6 @@ class FavoritesController < ApplicationController
 
 
     def favorite_params
-      params.require(:favorite).permit(:image_url, :name, :display_address, :display_phone, :rating)
+      params.require(:favorite).permit(:user_id,:image_url, :name, :display_address, :display_phone, :rating)
     end
 end

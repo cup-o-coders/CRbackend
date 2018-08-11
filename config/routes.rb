@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   get 'yelp/search'
   resources :users
   resources :favorites
+
+  get '/user_favorites/:id' =>'favorites#findbyuser'
 end
